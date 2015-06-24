@@ -74,7 +74,6 @@ function trapezoidArea(a, b, h) {
 //Problem 9
 function pointInCircleAndOutsideRectangle(x, y) {
     'use strict'
-    //debugger;
     if (!pointInCircle(x - 1, y - 1)) { return 'no'; }
     if (x < -1 || x > 5 && y < -1 || y > 1) { return 'yes'; }
     return 'no';
