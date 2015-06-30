@@ -132,17 +132,20 @@ function mostFrequentNumber(arr) {
 function binarySearch(arr, element) {
     var i,
         j,
-        index;
+        tempIndex,
+        targetIndex;
 
-    for(i = 0, j = arr.length - 1; !index;) {
-        if(arr[(j - i) / 2] < element) {
-            j = ((j - i) / 2) - 1;
-        } else if(arr[(j - i) / 2] > element) {
-            i = ((j - i) / 2) + 1;
+    for(i = 0, j = arr.length - 1; !targetIndex;) {
+        tempIndex = (j - i) / 2 | 0 + i;
+
+        if(arr[tempIndex] < element) {
+            i = tempIndex + 1;
+        } else if(arr[tempIndex] > element) {
+            j = tempIndex - 1;
         } else {
-            index = (j - i) / 2;
+            targetIndex = tempIndex;
         }
     }
 
-    console.log('Index is: ' + index);
+    console.log('Index is: ' + targetIndex);
 }
