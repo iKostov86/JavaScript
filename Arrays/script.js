@@ -24,8 +24,7 @@ function lexicographicallyComparison() {
     for(i = 0; i < length; i += 1) {
         if(arr1[i] > arr2[i]) {
             return 'arr1 is bigger than arr2';
-        }
-        else if(arr1[i] < arr2[i]) {
+        } else if(arr1[i] < arr2[i]) {
             return 'arr2 is bigger than arr1';
         }
     }
@@ -44,8 +43,7 @@ function maximalSequence(arr) {
     for(i = 1; i <= arr.length; i += 1) {
         if(arr[i] === tempElement) {
             tempCount += 1;
-        }
-        else {
+        } else {
             if(bestCount < tempCount) {
                 bestCount = tempCount;
                 bestElement = tempElement;
@@ -70,8 +68,7 @@ function maximalIncreasingSequence(arr) {
     for(i = 1; i <= arr.length; i += 1) {
         if(arr[i] > tempArr[tempArr.length - 1]) {
             tempArr.push(arr[i]);
-        }
-        else {
+        } else {
             if(tempArr.length > bestArr.length) {
                 bestArr = tempArr;
             }
@@ -116,8 +113,7 @@ function mostFrequentNumber(arr) {
     for(i = 0; i < arr.length; i += 1) {
         if(arrOfFrequency[arr[i]]) {
             arrOfFrequency[arr[i]] += 1;
-        }
-        else {
+        } else {
             arrOfFrequency[arr[i]] = 1;
         }
     }
@@ -134,7 +130,19 @@ function mostFrequentNumber(arr) {
 
 //Problem 7. Binary search
 function binarySearch(arr, element) {
-    for(i = arr.length / 2; i < arr.length;) {
+    var i,
+        j,
+        index;
 
+    for(i = 0, j = arr.length - 1; !index;) {
+        if(arr[(j - i) / 2] < element) {
+            j = ((j - i) / 2) - 1;
+        } else if(arr[(j - i) / 2] > element) {
+            i = ((j - i) / 2) + 1;
+        } else {
+            index = (j - i) / 2;
+        }
     }
+
+    console.log('Index is: ' + index);
 }
