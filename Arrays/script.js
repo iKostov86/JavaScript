@@ -106,8 +106,8 @@ function selectionSort(arr) {
 //Problem 6. Most frequent number
 function mostFrequentNumber(arr) {
     var i,
+        item,
         bestValue = 0,
-        bestKey,
         arrOfFrequency = [];
 
     for(i = 0; i < arr.length; i += 1) {
@@ -118,14 +118,17 @@ function mostFrequentNumber(arr) {
         }
     }
 
-    for(var item in arrOfFrequency) {
+    for(item in arrOfFrequency) {
         if(bestValue < arrOfFrequency[item]) {
             bestValue = arrOfFrequency[item];
-            bestKey = item;
         }
     }
 
-    console.log(bestKey + '(' + bestValue + ' times)');
+    for(item in arrOfFrequency) {
+        if(arrOfFrequency[item] === bestValue) {
+            console.log(item + '(' + bestValue + ' times)');
+        }
+    }
 }
 
 //Problem 7. Binary search
@@ -137,7 +140,9 @@ function binarySearch(arr, element) {
 
     for(i = 0, j = arr.length - 1; !targetIndex;) {
         tempIndex = (j - i) / 2 | 0 + i;
-
+        if(i < j) {
+            return -1;
+        }
         if(arr[tempIndex] < element) {
             i = tempIndex + 1;
         } else if(arr[tempIndex] > element) {
@@ -148,4 +153,18 @@ function binarySearch(arr, element) {
     }
 
     console.log('Index is: ' + targetIndex);
+}
+
+function someFunc() {
+    var arr = [3, 5, 2, 9, 1, 8, 0, 4, 7, 6];
+    console.log(arr);
+
+    arr.sort(function(a, b) {
+        console.log(a);
+        console.log(b);
+        console.log(a - b);
+        console.log(arr);
+        console.log('----------')
+        return a - b;
+    });
 }

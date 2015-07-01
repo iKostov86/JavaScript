@@ -40,8 +40,8 @@ function englishDigit(number) {
 function reverseNumber(number) {
     'use strict';
     var i,
-        str = '' + number,
-        reversed = '';
+        reversed = number < 0 ? '-' : '',
+        str = ('' + number).replace('-', '');
 
     for(i = str.length - 1; i > -1; i -= 1) {
         reversed += str[i];
