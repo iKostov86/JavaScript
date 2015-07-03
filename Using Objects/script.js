@@ -70,6 +70,9 @@ function removeElements(arr, element) {
 //Problem 3. Deep copy
 function deepCopy(obj) {
     'use strict';
+    if(typeof obj !== 'object') {
+        return obj;
+    }
     var prop,
         copied = {};
 
@@ -126,25 +129,34 @@ function makePerson(firstName, lastName, age) {
 function groupsBy(people, by) {
     'use strict';
     var i,
-        tempArr = [];
+        assocArr = {};
 
     for(i = 0; i < people.length; i += 1) {
-        tempArr[i] = people[i][by];
+        if(!assocArr[people[i][by]]) {
+            assocArr[people[i][by]] = [];
+        }
+
+        assocArr[people[i][by]].push(people[i]);
     }
 
-    return tempArr;
+    return assocArr;
 }
 
 function makeGroups() {
     var people = [makePerson('Ivaylo', 'Kostov', 29),
             makePerson('Ivan', 'Naidenov', 43),
-            makePerson('Georgi', 'Asparuhov', 69)];
+            makePerson('Ivan', 'Kostov', 55),
+            makePerson('Georgi', 'Asparuhov', 43)];
 
-    var assocArr = {};
+    var ageGroup = {},
+        fNameGroup = {},
+        lNameGroup = {};
 
-    assocArr['firstName'] = groupsBy(people, 'firstName');
-    assocArr['lastName'] = groupsBy(people, 'lastName');
-    assocArr['age'] = groupsBy(people, 'age');
+    ageGroup = groupsBy(people, 'age');
+    fNameGroup = groupsBy(people, 'firstName');
+    lNameGroup = groupsBy(people, 'lastName');
 
-    console.log(assocArr);
+    console.log(ageGroup);
+    console.log(fNameGroup);
+    console.log(lNameGroup);
 }
