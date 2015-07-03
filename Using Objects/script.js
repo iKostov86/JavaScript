@@ -50,4 +50,101 @@ function lines(p1, p2) {
     }
 }
 
-document.body.innerHTML += '<div>BAI HUI</div>';
+//Problem 2. Remove elements
+Array.prototype.remove = function(element) {
+    for(var i = 0; i < this.length;) {
+        if (this[i] === element) {
+            this.splice(i, 1);
+        } else {
+            i += 1;
+        }
+    }
+};
+
+function removeElements(arr, element) {
+    'use strict';
+    arr.remove(element);
+    console.log(arr);
+}
+
+//Problem 3. Deep copy
+function deepCopy(obj) {
+    'use strict';
+    var prop,
+        copied = {};
+
+    for (prop in obj) {
+        copied[prop] = obj[prop];
+    }
+
+    return copied;
+}
+
+//Problem 4. Has property
+function hasProperty(obj, property) {
+    'use strict';
+    for(var prop in obj) {
+        if(prop === property) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+//Problem 5. Youngest person
+function youngestPerson() {
+    'use strict';
+    var i,
+        people = [makePerson('Ivaylo', 'Kostov', 29),
+                    makePerson('Ivan', 'Naidenov', 43),
+                        makePerson('Georgi', 'Asparuhov', 69)],
+        youngest = 0;
+
+    for(i = 1; i < people.length; i += 1) {
+        if(people[i].age < people[youngest].age) {
+            youngest =  i;
+        }
+    }
+
+    console.log('The youngest human is: ' + people[youngest].toString() + '.');
+}
+
+function makePerson(firstName, lastName, age) {
+    'use strict';
+    return {
+        firstName: firstName,
+        lastName: lastName,
+        age: age,
+        toString: function() {
+            return this.firstName + ' ' +  this.lastName;
+        }
+    }
+}
+
+//Problem 6.
+function groupsBy(people, by) {
+    'use strict';
+    var i,
+        tempArr = [];
+
+    for(i = 0; i < people.length; i += 1) {
+        tempArr[i] = people[i][by];
+    }
+
+    return tempArr;
+}
+
+function makeGroups() {
+    var people = [makePerson('Ivaylo', 'Kostov', 29),
+            makePerson('Ivan', 'Naidenov', 43),
+            makePerson('Georgi', 'Asparuhov', 69)];
+
+    var assocArr = {};
+
+    assocArr['firstName'] = groupsBy(people, 'firstName');
+    assocArr['lastName'] = groupsBy(people, 'lastName');
+    assocArr['age'] = groupsBy(people, 'age');
+
+    console.log(assocArr);
+}
