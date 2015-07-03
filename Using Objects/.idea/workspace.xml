@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="49b3189d-76e8-416d-9e3d-777352991a0e" name="Default" comment="" />
+=======
+    <list default="true" id="b854a60a-09e3-47c1-a8a1-c4b402966fd4" name="Default" comment="" />
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
     <ignored path="Using Objects.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,7 +29,11 @@
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
+<<<<<<< HEAD
               <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+=======
+              <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
               <folding />
             </state>
           </provider>
@@ -34,8 +42,13 @@
       <file leaf-file-name="script.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script.js">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+            <state vertical-scroll-proportion="0.9044811">
+              <caret line="52" column="48" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="48" />
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
               <folding />
             </state>
           </provider>
@@ -43,6 +56,7 @@
       </file>
     </leaf>
   </component>
+<<<<<<< HEAD
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -51,6 +65,8 @@
       </list>
     </option>
   </component>
+=======
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -70,10 +86,17 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
+<<<<<<< HEAD
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1378" />
     <option name="height" value="744" />
+=======
+    <option name="x" value="829" />
+    <option name="y" value="3" />
+    <option name="width" value="1081" />
+    <option name="height" value="1027" />
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -99,7 +122,10 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+<<<<<<< HEAD
       <pane id="Scope" />
+=======
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -108,6 +134,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+<<<<<<< HEAD
         </subPane>
       </pane>
     </panes>
@@ -158,12 +185,36 @@
       <method />
     </configuration>
   </component>
+=======
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Using Objects" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Using Objects" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="FullScreen" value="false" />
+  </component>
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
       <changelist id="49b3189d-76e8-416d-9e3d-777352991a0e" name="Default" comment="" />
       <created>1435771421525</created>
       <option name="number" value="Default" />
@@ -174,15 +225,34 @@
       <option name="number" value="00001" />
       <option name="project" value="LOCAL" />
       <updated>1435787563833</updated>
+=======
+      <changelist id="b854a60a-09e3-47c1-a8a1-c4b402966fd4" name="Default" comment="" />
+      <created>1435827918936</created>
+      <option name="number" value="Default" />
+      <updated>1435827918936</updated>
+    </task>
+    <task id="LOCAL-00001" summary="some modif">
+      <created>1435873271875</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1435873271875</updated>
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0880597" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+=======
+    <frame x="829" y="3" width="1081" height="1027" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12547892" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -214,8 +284,13 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+<<<<<<< HEAD
     <MESSAGE value="working on task 1" />
     <option name="LAST_COMMIT_MESSAGE" value="working on task 1" />
+=======
+    <MESSAGE value="some modif" />
+    <option name="LAST_COMMIT_MESSAGE" value="some modif" />
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -225,13 +300,38 @@
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+<<<<<<< HEAD
           <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+=======
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/script.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+<<<<<<< HEAD
+          <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+=======
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/script.js">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
@@ -250,22 +350,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+        <state vertical-scroll-proportion="0.9044811">
+          <caret line="52" column="48" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="48" />
+>>>>>>> 5dbdb1bff795e3b593ca42b611b2cc8bc229550f
           <folding />
         </state>
       </provider>

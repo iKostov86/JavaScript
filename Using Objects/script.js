@@ -15,10 +15,6 @@ function planarCoordinates(x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6) {
         line2 = lines(p3, p4),
         line3 = lines(p5, p6);
 
-        //line1.length = 5;
-        //line2.length = 8;
-        //line3.length = 3;
-
         console.log(line1.length);
         console.log(line2.length);
         console.log(line3.length);
@@ -53,3 +49,5 @@ function lines(p1, p2) {
         }
     }
 }
+
+document.body.innerHTML += '<div>BAI HUI</div>';
