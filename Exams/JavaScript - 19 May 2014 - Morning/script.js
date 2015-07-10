@@ -1,18 +1,22 @@
 //1. Vehicles
-function solve(arguments) {
-    function vehicles(number) {
-        'use strict';
-        var wheels = [10, 4, 3],
-            count,
-            i,
-            j;
+function vehicles(args) {
+    'use strict';
+    var wheels = [10, 4, 3],
+        count = 0,
+        number = +args[0],
+        i,
+        j,
+        k;
 
-        for(i = 0; i < 3; i += 1) {
-            number = number % wheels[i];
-            if(!number) break;
-            for(j = 0; number != 0; j += 1) {
-                if(j === 2) j = 0
+    for(i = 0; i <= number / 10; i += 1) {
+        for(j = 0; j <= number / 4; j += 1) {
+            for(k = 0; k <= number / 3; k += 1) {
+                if((i * 10 + j * 4 + k * 3) === number) {
+                    count += 1;
+                }
             }
         }
     }
+
+    return count;
 }
