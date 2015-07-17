@@ -49,6 +49,40 @@ function sub_stringInText(text, sub_str) {
 }
 
 //Problem 4. Parse tags
-function parseTags() {
+function parseTags(text) {
     'use strict';
+    var start,
+        end,
+        str1,
+        str2,
+        i;
+
+    changeText('<upcase>', '</upcase>', function(x){ return x.toUpperCase(); });
+    changeText('<lowcase>', '</lowcase>', function(x) {return x.toLowerCase();});
+    changeText('<mixcase>', '</mixcase>', function(x) {
+        for (i = 0; i < x.length; i += 1) {
+            if (i % 2 === 0) {
+                x = x.replace(x[i], x[i].toUpperCase());
+            } else {
+                x = x.replace(x[i], x[i].toLowerCase());
+            }
+        }
+
+        return x;
+    });
+
+    console.log(text);
+
+    function changeText(tag1, tag2, func) {
+        while(true) {
+            start = text.indexOf(tag1, start);
+            if(start === -1) {
+                break;
+            }
+            end = text.indexOf(tag2, start + tag1.length);
+            str1 = text.substring(start, end + tag2.length);
+            str2 = func(text.substring(start + tag1.length, end));
+            text = text.replace(str1, str2);
+        }
+    }
 }
