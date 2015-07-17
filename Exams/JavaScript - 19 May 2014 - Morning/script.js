@@ -20,3 +20,5 @@ function vehicles(args) {
 
     return count;
 }
+
+//2. Paths
