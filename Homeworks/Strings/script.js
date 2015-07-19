@@ -86,3 +86,50 @@ function parseTags(text) {
         }
     }
 }
+
+//Problem 5. nbsp
+function replacesWhiteSpaces(text) {
+    'use strict';
+    var index;
+
+    while((index = text.indexOf(' ', index + 1)) !== -1) {
+        text = text.replace(text.substr(index, 1), 'NBSP');
+    }
+
+    console.log(text);
+}
+
+//Problem 6. Extract text from HTML
+function extractTextFromHTML(html) {
+    'use strict';
+    html = "<html><head><title>Sample site</title></head><body><div>text<div>more text</div>and more...</div>in body</body></html>";
+    var start = 0,
+        end = 0,
+        text = '';
+
+    while(start = html.indexOf('>', end), end = html.indexOf('<', start)) {
+        if(end !== -1) {
+            text += html.substring(start + 1, end);
+        } else {
+            break;
+        }
+
+    }
+
+    console.log(text);
+}
+
+//Problem 7. Parse URL
+function parseURL(url) {
+    'use strict';
+    var jsonObj = {},
+        index;
+
+    for(index = 0;;) {
+        index = url.indexOf(':', index);
+        jsonObj.protocol = url.substr(0, index);
+        break;
+    }
+
+    console.log(jsonObj);
+}
