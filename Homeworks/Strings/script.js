@@ -6,7 +6,8 @@ function reverseString(str) {
 
     for(i = str.length - 1, reversed = ''; i >= 0; reversed += str[i--]);
 
-    document.write(str + ' => ' + reversed);
+    return reversed;
+    //document.write(str + ' => ' + reversed);
 }
 
 //Problem 2. Correct brackets
@@ -102,7 +103,6 @@ function replacesWhiteSpaces(text) {
 //Problem 6. Extract text from HTML
 function extractTextFromHTML(html) {
     'use strict';
-    html = "<html><head><title>Sample site</title></head><body><div>text<div>more text</div>and more...</div>in body</body></html>";
     var start = 0,
         end = 0,
         text = '';
@@ -123,13 +123,149 @@ function extractTextFromHTML(html) {
 function parseURL(url) {
     'use strict';
     var jsonObj = {},
-        index;
+        start = 0,
+        end = 0;
 
-    for(index = 0;;) {
-        index = url.indexOf(':', index);
-        jsonObj.protocol = url.substr(0, index);
-        break;
-    }
+    end = url.indexOf(':', start);
+    jsonObj.protocol = url.substring(start, end);
+    start = url.indexOf('//', end) + 2;
+    end = url.indexOf('/', start);
+    jsonObj.server = url.substring(start, end);
+    jsonObj.resource = url.substring(end, url.length);
 
     console.log(jsonObj);
+}
+
+//Problem 8. Replace tags
+function replaceTags(html) {
+    'use strict';
+    var start,
+        end;
+
+    for(start = 0, end = 0;start !== -1 && end !== -1;) {
+        start = html.indexOf('<a', end);
+        end = html.indexOf('href="', start) + 6;
+        indexExists(start, end, '[URL=');
+
+        start = html.indexOf('">', end);
+        end = start + 2;
+        indexExists(start, end, ']');
+
+        start = html.indexOf('</a>', end);
+        end = start + 4;
+        indexExists(start, end, '[/URL]');
+    }
+
+
+    function indexExists(start, end, tag) {
+        if(start !== -1 && end !== -1) {
+            html = html.replace(html.substring(start, end), tag);
+        }
+    }
+
+    console.log(html);
+}
+
+//Problem 9. Extract e-mails
+function extractEmails(text) {
+    'use strict';
+    var emails = text.split(' ').filter(function(item) {
+        if(item.indexOf('@', 0) !== -1) {
+            return true;
+        }
+
+        return false;
+    });
+
+    console.log(emails);
+}
+
+function extractEmailsAdvanced(text) {
+    'use strict';
+    var regex = new RegExp('^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$'),
+        emails = text.split(' ');
+    emails = emails.filter(function(item) {
+            return regex.test(item);
+        });
+
+    console.log(emails);
+}
+
+//Problem 10. Find palindromes
+function findPalindromes(text) {
+    'use strict';
+    var i,
+        palindromes = [],
+        strings = text.split(' ');
+
+    for(i = 0; i < strings.length; i += 1) {
+        //if(reverseString(strings[i]) === strings[i]) {
+        //    palindromes.push(strings[i]);
+        //}
+        if(isPalindrome(strings[i])) {
+            palindromes.push(strings[i]);
+        }
+    }
+
+    console.log(palindromes);
+}
+
+function isPalindrome(letters) {
+
+    var characters  = letters.split(''),
+        firstLetter = characters.shift(),
+        lastLetter  = characters.pop();
+
+    if (firstLetter !== lastLetter) {
+        return false;
+    }
+
+    if (characters.length < 2) {
+        return true;
+    }
+
+    return isPalindrome(characters.join(''));
+}
+
+//Problem 11. String format
+function stringFormat() {
+    'use strict';
+    var args = [].slice.call(arguments),
+        frmt = args[0],
+        position = 0,
+        index = -1;
+
+    for(;;) {
+        index = frmt.indexOf('{', index + 1);
+        if(index !== -1) {
+            position = +frmt.charAt(index + 1);
+            frmt = frmt.replace(frmt.substr(index, 3), arguments[position + 1]);
+        } else {
+            break;
+        }
+    }
+
+    console.log(frmt);
+}
+
+//Problem 12. Generate list
+function generateListApp() {
+    'use strict';
+    var people = [{name: 'Petkan', age: 14}, {name: 'Divaka', age: 17}],
+        template = document.getElementById('list-item').innerHTML,
+        tmp = '',
+        peopleList = '',
+        i;
+    generateList(people, template);
+    function generateList(people, template) {
+        peopleList += '\<ul\>';
+        for(i = 0; i < people.length; i += 1) {
+            tmp = template.replace('-{name}-', people[i].name);
+            tmp = tmp.replace('-{age}-', '' + people[i].age);
+            peopleList += '\<li\>' + tmp + '\</li\>';
+        }
+        peopleList += '\</ul\>';
+    }
+
+    document.writeln(peopleList);
 }
