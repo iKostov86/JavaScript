@@ -256,8 +256,8 @@ function generateListApp() {
         tmp = '',
         peopleList = '',
         i;
-    generateList(people, template);
-    function generateList(people, template) {
+
+    (function() {
         peopleList += '\<ul\>';
         for(i = 0; i < people.length; i += 1) {
             tmp = template.replace('-{name}-', people[i].name);
@@ -265,7 +265,7 @@ function generateListApp() {
             peopleList += '\<li\>' + tmp + '\</li\>';
         }
         peopleList += '\</ul\>';
-    }
+    })();
 
     document.writeln(peopleList);
 }
