@@ -33,6 +33,14 @@ function correctBrackets(expression) {
 }
 
 //Problem 3. Sub-string in text
+function sub_stringInTextWithRegex(text, sub_str) {
+    'use strict';
+    var regex = new RegExp(sub_str, 'g'),
+        matches = text.match(regex);
+
+    return matches.length;
+}
+
 function sub_stringInText(text, sub_str) {
     'use strict';
     var length = sub_str.length,
@@ -50,6 +58,35 @@ function sub_stringInText(text, sub_str) {
 }
 
 //Problem 4. Parse tags
+function parseTagsWithRegex(text) {
+    'use strict';
+    var regex = new RegExp('\<upcase\>(.*?)<\/upcase\>', 'g');
+    text = text.replace(regex, function(x, y) {
+        return y.toUpperCase();
+    });
+    regex = new RegExp('\<lowcase\>(.*?)\<\/lowcase\>', 'g');
+    text = text.replace(regex, function(x, y) {
+        return y.toLowerCase();
+    });
+
+    regex = new RegExp('\<mixcase\>(.*?)\<\/mixcase\>', 'g');
+    text = text.replace(regex, function(x, y) {
+        var i;
+
+        for (i = 0; i < y.length; i += 1) {
+            if (Math.random() < 0.5) {
+                y = y.replace(y[i], y[i].toUpperCase());
+            } else {
+                y = y.replace(y[i], y[i].toLowerCase());
+            }
+        }
+
+        return y;
+    });
+
+    console.log(text);
+}
+
 function parseTags(text) {
     'use strict';
     var start,
@@ -58,9 +95,9 @@ function parseTags(text) {
         str2,
         i;
 
-    changeText('<upcase>', '</upcase>', function(x){ return x.toUpperCase(); });
-    changeText('<lowcase>', '</lowcase>', function(x) {return x.toLowerCase();});
-    changeText('<mixcase>', '</mixcase>', function(x) {
+    changeText('\<upcase\>', '\</upcase\>', function(x){ return x.toUpperCase(); });
+    changeText('\<lowcase\>', '\</lowcase\>', function(x) {return x.toLowerCase();});
+    changeText('\<mixcase\>', '\</mixcase\>', function(x) {
         for (i = 0; i < x.length; i += 1) {
             if (i % 2 === 0) {
                 x = x.replace(x[i], x[i].toUpperCase());
@@ -89,7 +126,14 @@ function parseTags(text) {
 }
 
 //Problem 5. nbsp
-function replacesWhiteSpaces(text) {
+function replaceWhiteSpacesWithRegex(text) {
+    'use strict';
+    var regex = / /g;
+    text = text.replace(regex, 'NBSP');
+    console.log(text);
+}
+
+function replaceWhiteSpaces(text) {
     'use strict';
     var index;
 
@@ -101,6 +145,34 @@ function replacesWhiteSpaces(text) {
 }
 
 //Problem 6. Extract text from HTML
+var myHTML = '<html>' +
+    '<head>' +
+    '<title>Sample site</title>' +
+    '</head>' +
+    '<body>' +
+    '<div>text' +
+    '<div>more text</div>' +
+    'and more...' +
+    '</div>' +
+    'in body' +
+    '</body>' +
+    '</html>';
+
+function extractTextFromHTMLWithRegex(html) {
+    'use strict';
+    html = html || document.documentElement.innerHTML;
+
+    var regex = new RegExp('<.*?>', 'g');
+
+    html= html.split(regex)
+        .map(function(item) {
+            return item.trim();
+        })
+        .join('');
+
+    console.log(html);
+}
+
 function extractTextFromHTML(html) {
     'use strict';
     var start = 0,
@@ -113,9 +185,7 @@ function extractTextFromHTML(html) {
         } else {
             break;
         }
-
     }
-
     console.log(text);
 }
 
