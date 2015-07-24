@@ -32,50 +32,34 @@ String.prototype.bind = function(obj) {
     'use strict';
     var prop,
         regexContent,
-        regexLink;
+        regexLink,
+        regexClass,
+        output = this;
 
-    for(prop in obj) {
+    for (prop in obj) {
+        regexContent = new RegExp('(^<.*?data-bind-content="' + prop + '".*?>)(.*?)(<\/.*?>)', 'g');
+        regexLink = new RegExp('(^<.*?data-bind-href="' + prop + '".*?)>(.*?</.*?>)', 'g');
+        regexClass = new RegExp('(^<.*?data-bind-class="' + prop + '".*?)>(.*?</.*?>)', 'g');
 
+        output = output.replace(regexContent, '$1' + obj[prop] + '$3');
+        output = output.replace(regexLink, '$1 href="' + obj[prop] + '">$2');
+        output = output.replace(regexClass, '$1 class="' + obj[prop] + '">$2');
     }
-};
 
-//String.prototype.bind = function(parameters) {
-//    var regexContent,
-//        regexHref,
-//        regexClass,
-//        prop,
-//        output = this;
-//
-//    for (prop in parameters) {
-//        regexContent = new RegExp('(<.*?data-bind-content="' + prop + '".*?>)(.*?)(<\\s*/.*?>)', 'g');
-//        regexHref = new RegExp('(<.*?data-bind-href="' + prop + '".*?)>', 'g');
-//        regexClass = new RegExp('(<.*?data-bind-class="(' + prop + ')".*?)>', 'g');
-//
-//        output = output.replace(regexContent, function(element, openingTag, content, closingTag) {
-//            return openingTag + parameters[prop] + closingTag;
-//        });
-//
-//        output = output.replace(regexHref, function (tag, contentBeforeClosing) {
-//            return contentBeforeClosing + ' href="' + parameters[prop] + '">';
-//        });
-//
-//        output = output.replace(regexClass, function (tag, contentBeforeClosing) {
-//            return contentBeforeClosing + ' class="' + parameters[prop] + '">';
-//        });
-//    }
-//
-//    return output;
-//};
+    return output;
+};
 
 function htmlBinding() {
     'use strict';
-    var str = '<div data-bind-content="name"></div>',
-             //<div data-bind-content="name">Steven</div>
+    //<div data-bind-content="name">Steven</div>
+    var str = '\<div data-bind-content="name"\>\</div\>',
         output = str.bind({name: 'Steven'});
     console.log(output);
 
-    str = '<a data-bind-content="name" data-bind-href="link" data-bind-class="name"></à>';
-         //<a data-bind-content="name" data-bind-href="link" data-bind-class="name" href="http://telerikacademy.com" class="Elena">Elena</à>
+    //<a data-bind-content="name" data-bind-href="link" data-bind-class="name" href="http://telerikacademy.com" class="Elena">Elena</à>
+    str = '\<a data-bind-content="name" data-bind-href="link" data-bind-class="name"\>\</à\>';
     output = str.bind({name: 'Elena', link: 'http://telerikacademy.com'});
     console.log(output);
+
+    document.writeln(output);
 }
