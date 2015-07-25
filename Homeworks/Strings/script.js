@@ -190,6 +190,20 @@ function extractTextFromHTML(html) {
 }
 
 //Problem 7. Parse URL
+function parseURLWithRegex(url) {
+    'use strict';
+    var regex = new RegExp('(.*?):\/\/(.*?)(\/.*)', ''),
+        matches = url.match(regex),
+        jsonObj = {};
+
+    //http://telerikacademy.com/Courses/Courses/Details/239
+    jsonObj.protocol = matches[1];
+    jsonObj.server = matches[2];
+    jsonObj.resource = matches[3];
+
+    return jsonObj;
+}
+
 function parseURL(url) {
     'use strict';
     var jsonObj = {},
@@ -207,6 +221,13 @@ function parseURL(url) {
 }
 
 //Problem 8. Replace tags
+function replaceTagsWithRegex(html) {
+    'use strict';
+    var regex = /<\s*a\s+href\s*=\s*"(.*?)"\s*>(.*?)<\s*\/a\s*>/gi;
+    html = html.replace(regex, '[URL=' + '$1 ' + ']' + '$2' + '[/URL]');
+    return html;
+}
+
 function replaceTags(html) {
     'use strict';
     var start,
@@ -226,7 +247,6 @@ function replaceTags(html) {
         indexExists(start, end, '[/URL]');
     }
 
-
     function indexExists(start, end, tag) {
         if(start !== -1 && end !== -1) {
             html = html.replace(html.substring(start, end), tag);
@@ -237,27 +257,23 @@ function replaceTags(html) {
 }
 
 //Problem 9. Extract e-mails
-function extractEmails(text) {
-    'use strict';
-    var emails = text.split(' ').filter(function(item) {
-        if(item.indexOf('@', 0) !== -1) {
-            return true;
-        }
-
-        return false;
-    });
-
-    console.log(emails);
-}
-
-function extractEmailsAdvanced(text) {
+function extractEmailsWithRegex(text) {
     'use strict';
     var regex = new RegExp('^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$'),
         emails = text.split(' ');
     emails = emails.filter(function(item) {
-            return regex.test(item);
-        });
+        return regex.test(item);
+    });
+    console.log(emails);
+}
 
+function extractEmails(text) {
+    'use strict';
+    var emails = text.split(' ').filter(function (item) {
+        if (item.indexOf('@', 0) !== -1) {
+            return true;
+        } return false;
+    });
     console.log(emails);
 }
 
@@ -281,20 +297,16 @@ function findPalindromes(text) {
 }
 
 function isPalindrome(letters) {
-
+    'use strict';
     var characters  = letters.split(''),
         firstLetter = characters.shift(),
         lastLetter  = characters.pop();
 
     if (firstLetter !== lastLetter) {
         return false;
-    }
-
-    if (characters.length < 2) {
+    } else if (characters.length < 2) {
         return true;
-    }
-
-    return isPalindrome(characters.join(''));
+    } return isPalindrome(characters.join(''));
 }
 
 //Problem 11. String format
