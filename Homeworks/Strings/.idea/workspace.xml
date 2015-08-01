@@ -30,8 +30,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.16">
-              <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+            <state vertical-scroll-proportion="-3.24">
+              <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -40,8 +40,8 @@
       <file leaf-file-name="script.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.35314286">
-              <caret line="337" column="72" selection-start-line="337" selection-start-column="72" selection-end-line="337" selection-end-column="72" />
+            <state vertical-scroll-proportion="1.1508571">
+              <caret line="295" column="29" selection-start-line="295" selection-start-column="29" selection-end-line="295" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -177,13 +177,7 @@
       <option name="project" value="LOCAL" />
       <updated>1437754224376</updated>
     </task>
-    <task id="LOCAL-00003" summary="solving tasks by regex (to 10th task excluding)">
-      <created>1437822437936</created>
-      <option name="number" value="00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1437822437936</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -224,8 +218,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Strings tasks are completed." />
     <MESSAGE value="solving tasks by regex (to 7th task excluding)" />
-    <MESSAGE value="solving tasks by regex (to 10th task excluding)" />
-    <option name="LAST_COMMIT_MESSAGE" value="solving tasks by regex (to 10th task excluding)" />
+    <option name="LAST_COMMIT_MESSAGE" value="solving tasks by regex (to 7th task excluding)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -234,22 +227,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -396,16 +373,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.16">
-          <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+        <state vertical-scroll-proportion="-3.24">
+          <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/script.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.35314286">
-          <caret line="337" column="72" selection-start-line="337" selection-start-column="72" selection-end-line="337" selection-end-column="72" />
+        <state vertical-scroll-proportion="1.1508571">
+          <caret line="295" column="29" selection-start-line="295" selection-start-column="29" selection-end-line="295" selection-end-column="29" />
           <folding />
         </state>
       </provider>
