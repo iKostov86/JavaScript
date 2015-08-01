@@ -278,17 +278,31 @@ function extractEmails(text) {
 }
 
 //Problem 10. Find palindromes
+function findPalindromesWithRegex(text) {
+    'use strict';
+    var palindromes,
+        regex = /\b\w+\b/g,
+        matches = text.match(regex);
+
+    palindromes = matches.filter(function(item) {
+        if(isPalindrome(item)) {
+            return true;
+        } return false;
+    });
+
+    console.log(palindromes);
+}
 function findPalindromes(text) {
     'use strict';
     var i,
         palindromes = [],
-        strings = text.split(' ');
+        strings = text.split(/[ ,.]/g);
 
     for(i = 0; i < strings.length; i += 1) {
         //if(reverseString(strings[i]) === strings[i]) {
         //    palindromes.push(strings[i]);
         //}
-        if(isPalindrome(strings[i])) {
+        if(strings[i] !== '' && isPalindrome(strings[i])) {
             palindromes.push(strings[i]);
         }
     }
@@ -321,7 +335,7 @@ function stringFormat() {
         index = frmt.indexOf('{', index + 1);
         if(index !== -1) {
             position = +frmt.charAt(index + 1);
-            frmt = frmt.replace(frmt.substr(index, 3), arguments[position + 1]);
+            frmt = frmt.replace(frmt.substr(index, 3), args[position + 1]);
         } else {
             break;
         }
