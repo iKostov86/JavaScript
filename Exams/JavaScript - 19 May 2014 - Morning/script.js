@@ -54,24 +54,24 @@ function paths(args) {
 //3. Shaver Parser
 function shaverParser(args) {
     'use strict';
-    var n = +args[0],
-        m = +args[n + 1],
+    var n = +(args[0]),
+        m = args.length,
         i,
         model = {},
-        prop,
+        prop = '',
         start = 0,
-        end,
+        end = 0,
+        data = '',
         str = '',
         temp = '',
         list = '';
 
-    debugger;
     //model object initial
     for(i = 1; i <= n; i += 1) {
-        str = args[i];
-        end = str.indexOf(':');
-        prop = str.substring(start, end);
-        temp = str.substring(end + 1, str.length);
+        data = args[i];
+        end = data.indexOf(':');
+        prop = data.substring(start, end);
+        temp = data.substring(end + 1, data.length);
         if(temp.indexOf(',') !== -1) {
             temp = temp.split(',');
             model[prop] = [];
@@ -85,69 +85,67 @@ function shaverParser(args) {
         }
     }
 
-    console.log(str);
-    console.log('--------------------------------');
-    debugger;
     //html initial
-    str = '';
-    for(i = m; i < args.length; i += 1) {
-        str += args[i] + '\n';
+    for(i += 1; i < m; i += 1) {
+        if(i === (m - 1)) {
+            str += args[i];
+        } else {
+            str += (args[i] + '\n');
+        }
     }
 
-    console.log(str);
-    console.log('--------------------------------');
-    debugger;
     //render sections
-    start = -1;
-    while((start = str.indexOf('@renderSection(', start + 1)) !== -1) {
+    start = str.indexOf('@renderSection');
+    while(start !== -1) {
         end = str.indexOf(')', start);
-        prop = str.substring(str.indexOf('"', start), str.lastIndexOf('"', end));
-        temp = '@section' + prop;
+        prop = str.substring(str.indexOf('"', start) + 1, str.lastIndexOf('"', end));
+        temp = '@section ' + prop;
+        data = str.substring(start, str.indexOf(')', start) + 1);
         start = str.indexOf('{', str.indexOf(temp)) + 1;
         end = str.indexOf('}', start);
-        str = str.replace(temp, str.substring(start, end));
+        str = str.replace(data, str.substring(start, end).trim());
+        start = str.indexOf('@renderSection', start + 1);
     }
 
-    console.log(str);
-    console.log('--------------------------------');
-    debugger;
     //conditional statements
     start = -1;
     while((start = str.indexOf('@if', start + 1)) !== -1) {
         end = str.indexOf('}', start);
         prop = str.substring(str.indexOf('(', start) + 1, str.indexOf(')', start));
-        if(prop) {
-            temp = str.substring(str.indexOf('{', start) + 1, end);
-            str = str.replace(str.substring(start, end), temp);
+        if(model[prop]) {
+            temp = str.substring(str.indexOf('{', start) + 1, end).trim();
+            str = str.replace(str.substring(start, end + 1), temp);
         } else {
-            str = str.replace(str.substring(start, end), '');
+            //str = str.slice(0, start) + str.slice(end + 2, str.length - 1);
+            str = str.replace(str.substring(start, end + 2), '');
         }
     }
 
-    console.log(str);
-    console.log('--------------------------------');
-    debugger;
     //loop
     start = -1;
     while((start = str.indexOf('@foreach', start + 1)) !== -1) {
         end = str.indexOf('}', start);
         prop = str.substring(str.indexOf('in ', start) + 3, str.indexOf(')', start));
-        temp = str.substring(str.indexOf('(var ') + 4, str.indexOf(' in') - 1);
-        list += str.substring(str.indexOf('{', start) + 1, str.indexOf('}', start))
-        for(i in model[prop]) {
-            list.replace('@' + temp, i);
+        temp = '@' + str.substring(str.indexOf('(var ') + 5, str.indexOf(' in'));
+        for(i = 0; i < model[prop].length; i += 1) {
+            if(i === model[prop].length - 1) {
+                list += str.substring(str.indexOf('{', start) + 1, str.indexOf('}', start)).trim();
+            } else {
+                list += str.substring(str.indexOf('{', start) + 1, str.indexOf('}', start)).trim() + '\n';
+            }
+            list = list.replace(temp, model[prop][i]);
         }
+        str = str.replace(str.substring(start, end + 1), list);
     }
 
-    console.log(str);
-    console.log('--------------------------------');
-    debugger;
     //replace model properties
     for(prop in model) {
         temp = new RegExp('@' + prop, 'g');
         str = str.replace(temp, model[prop]);
     }
-    console.log(str);
+
+    str = str.replace(str.substring(0, str.indexOf('<!DOCTYPE html>')), '');
+    return str;
 }
 
 var tests = [
@@ -161,16 +159,16 @@ var tests = [
 '42',
 '@section menu {',
 '<ul id="menu">',
-'<li>Home</li>',
-'<li>About us</li>',
+'   <li>Home</li>',
+'   <li>About us</li>',
 '</ul>',
 '}',
 '@section footer {',
 '<footer>',
-'Copyright Telerik Academy 2014',
+'   Copyright Telerik Academy 2014',
 '</footer>',
 '}',
-'!DOCTYPE html>',
+'<!DOCTYPE html>',
 '<html>',
 '<head>',
 '<title>Telerik Academy</title>',
@@ -186,15 +184,15 @@ var tests = [
 '',
 '<ul>',
 '@foreach (var student in students) {',
-'<li>',
-'@student',
-'</li>',
-'<li>Multiline @title</li>',
+'   <li>',
+'       @student',
+'   </li>',
+'   <li>Multiline @title</li>',
 '}',
 '</ul>',
 '@if (showMarks) {',
 '<div>',
-'@marks',
+'   @marks',
 '</div>',
 '}',
 '',
@@ -203,4 +201,4 @@ var tests = [
 '</html>'
 ];
 
-shaverParser(tests);
+console.log(shaverParser(tests));
