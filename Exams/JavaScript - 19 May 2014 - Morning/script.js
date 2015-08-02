@@ -52,6 +52,44 @@ function paths(args) {
 }
 
 //3. Shaver Parser
+function solve(args) {
+    'use strict';
+    var n = +args[0],
+        m = +args[n + 1],
+        model = {},
+        keyValuePair,
+        currentLine,
+        result = [],
+        inState = false,
+        i,
+        j;
+
+    //model object initial
+    for(i = 1; i <= n; i += 1) {
+        keyValuePair = args[i].split(':');
+        if(keyValuePair[1].indexOf(',') !== -1) {
+            keyValuePair[1] = keyValuePair[1].split(',');
+            model[keyValuePair[0]] = keyValuePair[1];
+        } else if(keyValuePair[1] === 'true' || keyValuePair[1] === 'false') {
+            model[keyValuePair[0]] = JSON.parse(keyValuePair[1]);
+        } else {
+            model[keyValuePair[0]] = keyValuePair[1];
+        }
+    }
+
+    for(i = n + 2; i < n + m + 2; i += 1) {
+        currentLine = args[i];
+        for(j = 0; j < currentLine.length; j += 1) {
+            if(currentLine[j] === '@') {
+                if(currentLine[j + 1] === '@')
+                inState = true;
+            } else if(currentLine[j] === '}') {
+                inState = false;
+            }
+        }
+        result.push('\n');
+    }
+}
 function shaverParser(args) {
     'use strict';
     var n = +(args[0]),
@@ -94,6 +132,7 @@ function shaverParser(args) {
         }
     }
 
+    //debugger;
     //render sections
     start = str.indexOf('@renderSection');
     while(start !== -1) {
@@ -103,10 +142,12 @@ function shaverParser(args) {
         data = str.substring(start, str.indexOf(')', start) + 1);
         start = str.indexOf('{', str.indexOf(temp)) + 1;
         end = str.indexOf('}', start);
-        str = str.replace(data, str.substring(start, end).trim());
+        str = str.replace(data, str.substring(start - 1, end));
         start = str.indexOf('@renderSection', start + 1);
     }
 
+    console.log(str);
+    debugger;
     //conditional statements
     start = -1;
     while((start = str.indexOf('@if', start + 1)) !== -1) {
@@ -148,57 +189,57 @@ function shaverParser(args) {
     return str;
 }
 
-var tests = [
-'6',
-'title:Telerik Academy',
-'showSubtitle:true',
-'subTitle:Free training',
-'showMarks:false',
-'marks:3,4,5,6',
-'students:Pesho,Gosho,Ivan',
-'42',
-'@section menu {',
-'<ul id="menu">',
-'   <li>Home</li>',
-'   <li>About us</li>',
-'</ul>',
-'}',
-'@section footer {',
-'<footer>',
-'   Copyright Telerik Academy 2014',
-'</footer>',
-'}',
-'<!DOCTYPE html>',
-'<html>',
-'<head>',
-'<title>Telerik Academy</title>',
-'</head>',
-'<body>',
-'@renderSection("menu")',
-'',
-'<h1>@title</h1>',
-'@if (showSubtitle) {',
-'<h2>@subTitle</h2>',
-'<div>@@JustNormalTextWithDoubleKliomba ;)</div>',
-'}',
-'',
-'<ul>',
-'@foreach (var student in students) {',
-'   <li>',
-'       @student',
-'   </li>',
-'   <li>Multiline @title</li>',
-'}',
-'</ul>',
-'@if (showMarks) {',
-'<div>',
-'   @marks',
-'</div>',
-'}',
-'',
-'@renderSection("footer")',
-'</body>',
-'</html>'
+var test = [
+    '6',
+    'title:Telerik Academy',
+    'showSubtitle:true',
+    'subTitle:Free training',
+    'showMarks:false',
+    'marks:3,4,5,6',
+    'students:Pesho,Gosho,Ivan',
+    '42',
+    '@section menu {',
+    '<ul id="menu">',
+    '    <li>Home</li>',
+    '    <li>About us</li>',
+    '</ul>',
+    '}',
+    '@section footer {',
+    '<footer>',
+    '    Copyright Telerik Academy 2014',
+    '</footer>',
+    '}',
+    '<!DOCTYPE html>',
+    '<html>',
+    '<head>',
+    '    <title>Telerik Academy</title>',
+    '</head>',
+    '<body>',
+    '    @renderSection("menu")',
+    '',
+    '    <h1>@title</h1>',
+    '    @if (showSubtitle) {',
+    '        <h2>@subTitle</h2>',
+    '        <div>@@JustNormalTextWithDoubleKliomba ;)</div>',
+    '    }',
+    '',
+    '    <ul>',
+    '        @foreach (var student in students) {',
+    '            <li>',
+    '                @student',
+    '            </li>',
+    '            <li>Multiline @title</li>',
+    '        }',
+    '    </ul>',
+    '    @if (showMarks) {',
+    '        <div>',
+    '            @marks',
+    '        </div>',
+    '    }',
+    '',
+    '    @renderSection("footer")',
+    '</body>',
+    '</html>'
 ];
 
-console.log(shaverParser(tests));
+//console.log(shaverParser(test));
