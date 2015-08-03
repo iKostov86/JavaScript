@@ -52,18 +52,30 @@ function paths(args) {
 }
 
 //3. Shaver Parser
-function solve(args) {
+function shaverParser(args) {
     'use strict';
     var n = +args[0],
         m = +args[n + 1],
         model = {},
+        result = [],
         keyValuePair,
         currentLine,
-        result = [],
-        inState = false,
+        currentName,
+        currentItem,
+        currentContent = [],
+        allSections = {},
+        leadingWhiteSpaces,
+        arrayOfWhiteSpaces,
+        inShaver = false,
+        inSection = false,
+        inRenderSection = false,
+        inCondition = false,
+        inForEach = false,
+        start,
+        end,
         i,
-        j;
-
+        j,
+        k;
     //model object initial
     for(i = 1; i <= n; i += 1) {
         keyValuePair = args[i].split(':');
@@ -76,117 +88,109 @@ function solve(args) {
             model[keyValuePair[0]] = keyValuePair[1];
         }
     }
-
     for(i = n + 2; i < n + m + 2; i += 1) {
-        currentLine = args[i];
-        for(j = 0; j < currentLine.length; j += 1) {
-            if(currentLine[j] === '@') {
-                if(currentLine[j + 1] === '@')
-                inState = true;
-            } else if(currentLine[j] === '}') {
-                inState = false;
-            }
-        }
-        result.push('\n');
-    }
-}
-function shaverParser(args) {
-    'use strict';
-    var n = +(args[0]),
-        m = args.length,
-        i,
-        model = {},
-        prop = '',
-        start = 0,
-        end = 0,
-        data = '',
-        str = '',
-        temp = '',
-        list = '';
-
-    //model object initial
-    for(i = 1; i <= n; i += 1) {
-        data = args[i];
-        end = data.indexOf(':');
-        prop = data.substring(start, end);
-        temp = data.substring(end + 1, data.length);
-        if(temp.indexOf(',') !== -1) {
-            temp = temp.split(',');
-            model[prop] = [];
-            temp.forEach(function(item) {
-                model[prop].push(item);
-            })
-        } else if(temp === 'true' || temp === 'false') {
-            model[prop] = JSON.parse(temp);
+        if(args[i] === undefined) {
+            currentLine = '';
+        } else if(args[i].indexOf('@@') > -1) {
+            currentLine = args[i].replace('@', '');
         } else {
-            model[prop] = temp;
+            currentLine = args[i];
         }
-    }
-
-    //html initial
-    for(i += 1; i < m; i += 1) {
-        if(i === (m - 1)) {
-            str += args[i];
-        } else {
-            str += (args[i] + '\n');
-        }
-    }
-
-    //debugger;
-    //render sections
-    start = str.indexOf('@renderSection');
-    while(start !== -1) {
-        end = str.indexOf(')', start);
-        prop = str.substring(str.indexOf('"', start) + 1, str.lastIndexOf('"', end));
-        temp = '@section ' + prop;
-        data = str.substring(start, str.indexOf(')', start) + 1);
-        start = str.indexOf('{', str.indexOf(temp)) + 1;
-        end = str.indexOf('}', start);
-        str = str.replace(data, str.substring(start - 1, end));
-        start = str.indexOf('@renderSection', start + 1);
-    }
-
-    console.log(str);
-    debugger;
-    //conditional statements
-    start = -1;
-    while((start = str.indexOf('@if', start + 1)) !== -1) {
-        end = str.indexOf('}', start);
-        prop = str.substring(str.indexOf('(', start) + 1, str.indexOf(')', start));
-        if(model[prop]) {
-            temp = str.substring(str.indexOf('{', start) + 1, end).trim();
-            str = str.replace(str.substring(start, end + 1), temp);
-        } else {
-            //str = str.slice(0, start) + str.slice(end + 2, str.length - 1);
-            str = str.replace(str.substring(start, end + 2), '');
-        }
-    }
-
-    //loop
-    start = -1;
-    while((start = str.indexOf('@foreach', start + 1)) !== -1) {
-        end = str.indexOf('}', start);
-        prop = str.substring(str.indexOf('in ', start) + 3, str.indexOf(')', start));
-        temp = '@' + str.substring(str.indexOf('(var ') + 5, str.indexOf(' in'));
-        for(i = 0; i < model[prop].length; i += 1) {
-            if(i === model[prop].length - 1) {
-                list += str.substring(str.indexOf('{', start) + 1, str.indexOf('}', start)).trim();
+        //set state or push into result
+        if(!inShaver) {
+            if (currentLine.indexOf('@section ') > -1) {
+                currentName = currentLine.split(' ')[1];
+                inSection = true;
+                inShaver = true;
+                continue;
+            } else if ((leadingWhiteSpaces = currentLine.indexOf('@renderSection("')) > -1) {
+                currentName = currentLine.split('"')[1];
+                inRenderSection = true;
+                inShaver = true;
+            } else if ((leadingWhiteSpaces = currentLine.indexOf('@if')) > -1) {
+                start = currentLine.indexOf('(');
+                end = currentLine.indexOf(')');
+                currentName = currentLine.substring(start + 1, end);
+                inCondition = true;
+                inShaver = true;
+                continue;
+            } else if((leadingWhiteSpaces = currentLine.indexOf('@foreach')) > -1) {
+                start = currentLine.indexOf('var ');
+                end = currentLine.indexOf(' in', start);
+                currentItem = '@' + currentLine.substring(start + 4, end);
+                start = end + 4;
+                end = currentLine.indexOf(')', start);
+                currentName = currentLine.substring(start, end);
+                inForEach = true;
+                inShaver = true;
+                continue;
             } else {
-                list += str.substring(str.indexOf('{', start) + 1, str.indexOf('}', start)).trim() + '\n';
+                result.push(currentLine);
             }
-            list = list.replace(temp, model[prop][i]);
         }
-        str = str.replace(str.substring(start, end + 1), list);
-    }
+        //inState logic
+        if(inShaver) {
+            if(inSection) {
+                if(currentLine.indexOf('}') > -1) {
+                    inSection = false;
+                    inShaver = false;
+                    allSections[currentName] = [];
+                    for(j = 0; j < currentContent.length; j += 1) {
+                        allSections[currentName].push(currentContent[j]);
+                    }
+                    currentContent = [];
+                } else {
+                    currentContent.push(currentLine);
+                }
+            } else if(inRenderSection) {
+                inRenderSection = false;
+                inShaver = false;
+                arrayOfWhiteSpaces = new Array(leadingWhiteSpaces + 1);
+                for(j = 0; j < allSections[currentName].length; j += 1) {
+                   result.push(arrayOfWhiteSpaces.join(' ') + allSections[currentName][j]);
+                }
+                currentContent = [];
+            } else if(inCondition) {
+                if(currentLine.indexOf('}') > -1) {
+                    inCondition = false;
+                    inShaver = false;
+                    arrayOfWhiteSpaces = new Array(leadingWhiteSpaces + 1);
+                    for(j = 0; j < currentContent.length; j += 1) {
+                        result.push(arrayOfWhiteSpaces.join(' ') + currentContent[j].trim());
+                    }
+                    currentContent = [];
+                } else if(model[currentName]) {
+                    currentContent.push(currentLine);
+                }
+            } else if(inForEach) {
+                if(currentLine.indexOf('}') > -1) {
+                    inForEach = false;
+                    inShaver = false;
+                    arrayOfWhiteSpaces = new Array(leadingWhiteSpaces + 1);
+                    for(j = 0; j < model[currentName].length; j += 1) {
+                        for(k = 0; k < currentContent.length; k += 1) {
+                            if(currentContent[k].indexOf(currentItem) > -1) {
+                                result.push(new Array(currentContent[k].indexOf(currentItem)).join(' ') + currentContent[k].replace(currentItem, model[currentName][k]).trim());
+                            } else {
+                                result.push(arrayOfWhiteSpaces.join(' ') + currentContent[k].trim());
+                            }
+                        }
+                    }
+                    currentContent = [];
+                } else {
+                    currentContent.push(currentLine);
+                }
 
+            }
+        }
+    }
     //replace model properties
-    for(prop in model) {
-        temp = new RegExp('@' + prop, 'g');
-        str = str.replace(temp, model[prop]);
+    for(i = 0; i < result.length; i += 1) {
+        for(currentItem in model) {
+            result[i] = result[i].replace('@' + currentItem, model[currentItem]);
+        }
     }
-
-    str = str.replace(str.substring(0, str.indexOf('<!DOCTYPE html>')), '');
-    return str;
+    return result.join('\n');
 }
 
 var test = [
