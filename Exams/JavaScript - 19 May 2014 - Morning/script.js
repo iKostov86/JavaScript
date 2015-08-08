@@ -76,6 +76,7 @@ function shaverParser(args) {
         i,
         j,
         k;
+
     //model object initial
     for(i = 1; i <= n; i += 1) {
         keyValuePair = args[i].split(':');
@@ -246,4 +247,4 @@ var test = [
     '</html>'
 ];
 
-//console.log(shaverParser(test));
+console.log(shaverParser(test));
