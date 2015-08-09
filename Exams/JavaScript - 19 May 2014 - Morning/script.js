@@ -77,6 +77,8 @@ function shaverParser(args) {
         j,
         k;
 
+
+
     //model object initial
     for(i = 1; i <= n; i += 1) {
         keyValuePair = args[i].split(':');
@@ -89,17 +91,19 @@ function shaverParser(args) {
             model[keyValuePair[0]] = keyValuePair[1];
         }
     }
-    for(i = n + 2; i < n + m + 2; i += 1) {
+
+    for(i = n + 2; i < args.length; i += 1) {
         if(args[i] === undefined) {
             currentLine = '';
-        } else if(args[i].indexOf('@@') > -1) {
-            currentLine = args[i].replace('@', '');
         } else {
             currentLine = args[i];
         }
+
         //set state or push into result
         if(!inShaver) {
-            if (currentLine.indexOf('@section ') > -1) {
+            if (currentLine.indexOf('@@') > -1) {
+                result.push(currentLine);
+            } else if (currentLine.indexOf('@section ') > -1  && currentLine.indexOf('{') > -1) {
                 currentName = currentLine.split(' ')[1];
                 inSection = true;
                 inShaver = true;
@@ -108,14 +112,14 @@ function shaverParser(args) {
                 currentName = currentLine.split('"')[1];
                 inRenderSection = true;
                 inShaver = true;
-            } else if ((leadingWhiteSpaces = currentLine.indexOf('@if')) > -1) {
+            } else if ((leadingWhiteSpaces = currentLine.indexOf('@if')) > -1  && currentLine.indexOf('{') > -1) {
                 start = currentLine.indexOf('(');
                 end = currentLine.indexOf(')');
                 currentName = currentLine.substring(start + 1, end);
                 inCondition = true;
                 inShaver = true;
                 continue;
-            } else if((leadingWhiteSpaces = currentLine.indexOf('@foreach')) > -1) {
+            } else if ((leadingWhiteSpaces = currentLine.indexOf('@foreach')) > -1  && currentLine.indexOf('{') > -1) {
                 start = currentLine.indexOf('var ');
                 end = currentLine.indexOf(' in', start);
                 currentItem = '@' + currentLine.substring(start + 4, end);
@@ -129,6 +133,7 @@ function shaverParser(args) {
                 result.push(currentLine);
             }
         }
+
         //inState logic
         if(inShaver) {
             if(inSection) {
@@ -168,10 +173,11 @@ function shaverParser(args) {
                     inForEach = false;
                     inShaver = false;
                     arrayOfWhiteSpaces = new Array(leadingWhiteSpaces + 1);
-                    for(j = 0; j < model[currentName].length; j += 1) {
+                    end = model[currentName].length;
+                    for(j = 0; j < end; j += 1) {
                         for(k = 0; k < currentContent.length; k += 1) {
                             if(currentContent[k].indexOf(currentItem) > -1) {
-                                result.push(new Array(currentContent[k].indexOf(currentItem)).join(' ') + currentContent[k].replace(currentItem, model[currentName][k]).trim());
+                                result.push(new Array(leadingWhiteSpaces + 1).join(' ') + currentContent[k].replace(currentItem, model[currentName][j]));
                             } else {
                                 result.push(arrayOfWhiteSpaces.join(' ') + currentContent[k].trim());
                             }
@@ -181,70 +187,133 @@ function shaverParser(args) {
                 } else {
                     currentContent.push(currentLine);
                 }
-
             }
         }
     }
     //replace model properties
     for(i = 0; i < result.length; i += 1) {
-        for(currentItem in model) {
-            result[i] = result[i].replace('@' + currentItem, model[currentItem]);
+        if (result[i].indexOf('@@') > -1) {
+            result[i] = result[i].replace('@@', '@');
+        } else {
+            for(currentItem in model) {
+                result[i] = result[i].replace('@' + currentItem, model[currentItem]);
+            }
         }
     }
     return result.join('\n');
 }
 
-var test = [
-    '6',
-    'title:Telerik Academy',
-    'showSubtitle:true',
-    'subTitle:Free training',
-    'showMarks:false',
-    'marks:3,4,5,6',
-    'students:Pesho,Gosho,Ivan',
-    '42',
-    '@section menu {',
-    '<ul id="menu">',
-    '    <li>Home</li>',
-    '    <li>About us</li>',
-    '</ul>',
-    '}',
-    '@section footer {',
-    '<footer>',
-    '    Copyright Telerik Academy 2014',
-    '</footer>',
-    '}',
-    '<!DOCTYPE html>',
-    '<html>',
-    '<head>',
-    '    <title>Telerik Academy</title>',
-    '</head>',
-    '<body>',
-    '    @renderSection("menu")',
-    '',
-    '    <h1>@title</h1>',
-    '    @if (showSubtitle) {',
-    '        <h2>@subTitle</h2>',
-    '        <div>@@JustNormalTextWithDoubleKliomba ;)</div>',
-    '    }',
-    '',
-    '    <ul>',
-    '        @foreach (var student in students) {',
-    '            <li>',
-    '                @student',
-    '            </li>',
-    '            <li>Multiline @title</li>',
-    '        }',
-    '    </ul>',
-    '    @if (showMarks) {',
-    '        <div>',
-    '            @marks',
-    '        </div>',
-    '    }',
-    '',
-    '    @renderSection("footer")',
-    '</body>',
-    '</html>'
+var tests = [
+    [
+        '6',
+        'title:Telerik Academy',
+        'showSubtitle:true',
+        'subTitle:Free training',
+        'showMarks:false',
+        'marks:3,4,5,6',
+        'students:Pesho,Gosho,Ivan',
+        '42',
+        '@section menu {',
+        '<ul id="menu">',
+        '    <li>Home</li>',
+        '    <li>About us</li>',
+        '</ul>',
+        '}',
+        '@section footer {',
+        '<footer>',
+        '    Copyright Telerik Academy 2014',
+        '</footer>',
+        '}',
+        '<!DOCTYPE html>',
+        '<html>',
+        '<head>',
+        '    <title>Telerik Academy</title>',
+        '</head>',
+        '<body>',
+        '    @renderSection("menu")',
+        '',
+        '    <h1>@title</h1>',
+        '    @if (showSubtitle) {',
+        '        <h2>@subTitle</h2>',
+        '        <div>@@JustNormalTextWithDoubleKliomba ;)</div>',
+        '    }',
+        '',
+        '    <ul>',
+        '        @foreach (var student in students) {',
+        '            <li>',
+        '                @student',
+        '            </li>',
+        '            <li>Multiline @title</li>',
+        '        }',
+        '    </ul>',
+        '    @if (showMarks) {',
+        '        <div>',
+        '            @marks',
+        '        </div>',
+        '    }',
+        '',
+        '    @renderSection("footer")',
+        '</body>',
+        '</html>'
+    ],
+    [
+        '0',
+        '15',
+        '<div>',
+        '   <p>',
+        '   @@if (pesho)',
+        '       @@escaped dude',
+        '   </p>',
+        '   <p>',
+        '   @@renderSection("pesho")',
+        '   </p>',
+        '   <p>',
+        '   @@foreach(var pesho in peshos)',
+        '       @@escaped in comment',
+        '   </p>',
+        '</div>'
+    ],
+    [
+        '2',
+        'someNumbers:1,2,3,4,5',
+        'someTechs:asp.net,mvc,angular,node,c-sharp',
+        '14',
+        '<div>',
+        '   <span>Some bulsh*t text</span>',
+        '   <br />',
+        '   @foreach (var number in someNumbers) {',
+        '       <span>@number da ima</span>',
+        '       <span>only @number</span>',
+        '   }',
+        '   <br />',
+        '   <div>',
+        '       <span>More bulsh*t text</span>',
+        '       @foreach (var tech in someTechs) {',
+        '           <span>@tech is cool</span>',
+        '           <span>and @tech is mama</span>',
+        '       }',
+        '   <div>',
+        '</div>'
+    ],
+    [
+        '5',
+        'pesho:gosho',
+        'gosho:pesho',
+        'if:gadno',
+        'foreach:hackvane',
+        'renderSection:ivaylo sucks ;D',
+        '8',
+        '<div>',
+        '   @@if (pesho)',
+        '   @if (pesho)',
+        '   @foreach (var nqma in nikoi)',
+        '   @pesho',
+        '   @gosho',
+        '   @renderSection',
+        '</div>'
+    ]
 ];
 
-console.log(shaverParser(test));
+tests.forEach(function(item) {
+    console.log(shaverParser(item));
+});
