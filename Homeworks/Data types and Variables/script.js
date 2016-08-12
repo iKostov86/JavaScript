@@ -8,7 +8,8 @@ var minValue = Number.MIN_VALUE;
 var pi = Math.PI;
 var bool = true;
 
-var quotedText = '\'\'How you doin\'?\', Joey said\'';
+var quotedText = '\'How you doin\'?\', Joey said\'';
+
 console.log(quotedText);
 
 console.log('the type of "int" is: ' + typeof int);
