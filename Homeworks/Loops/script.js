@@ -139,3 +139,19 @@ function lexicographicallyTheSmallest(element) {
     console.log('The largest is: ' + theLargest);
     console.log('The smallest is: ' + theSmallest);
 }
+
+// Problem 5.1 Hex to Decimal
+function hexToDecimal(args) {
+    var hex = args[0];
+    var decimal = parseInt(hex, 16);
+
+    console.log(decimal);
+}
+
+// Problem 5.2 Decimal to Hex
+function DecimalToHex(args) {
+    var decimal = +args[0];
+    var hex = decimal.toString(16);
+
+    console.log(hex);
+}
