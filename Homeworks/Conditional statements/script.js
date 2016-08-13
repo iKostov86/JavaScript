@@ -1,21 +1,27 @@
 var console = console;
-//Problem 1. Exchange if greater
-function exchangeIfGreater(a, b) {
+// Problem 1. Exchange if greater
+function exchangeIfFirstNumberIsGreater(args) {
     "use strict";
-    if (a > b) {
-        console.log(b + ' ' + a);
-    } else {
-        console.log(a + ' ' + b);
-    }
+    var a = +args[0];
+    var b = +args[1];
+    var result = '';
+
+    result += a > b ? b  + ' ' + a : a  + ' ' + b;
+    console.log(result);
 }
 
-//Problem 2. Multiplication Sign
-function multiplicationSign(a, b, c) {
+// Problem 2. Multiplication Sign
+function multiplicationSign(args) {
     'use strict';
+    var a = +args[0];
+    var b = +args[1];
+    var c = +args[2];
     var countNegative = 0;
+
     if (a === 0 || b === 0 || c === 0) {
         return 0;
-    } else {
+    } 
+    else {
         if (a < 0) {
             countNegative++;
         }
@@ -33,144 +39,178 @@ function multiplicationSign(a, b, c) {
     }
 }
 
-//Problem 3. The biggest of Three
-function theBiggestOfThree(a, b, c) {
+// Problem 3. The biggest of Three
+function theBiggestOfThree(args) {
     'use strict';
+    var a = +args[0];
+    var b = +args[1];
+    var c = +args[2];
+    var theBiggest = a;
+
     if (a >= b) {
-        if (a >= c) {
-            console.log(a);
-        } else {
-            console.log(c);
+        if (a < c) {
+            theBiggest = c;
         }
     } else {
         if (b >= c) {
-            console.log(b);
+            theBiggest = b;
         } else {
-            console.log(c);
+            theBiggest = c;
         }
     }
+
+    console.log(theBiggest);
 }
 
-//Problem 4. Sort 3 numbers
-function sortThreeNumbers(a, b, c) {
+// Problem 4. Sort 3 numbers
+function sortThreeNums(args) {
     'use strict';
-    if (a > b) {
+    var a = +args[0];
+    var b = +args[1];
+    var c = +args[2];
+    var result = '';
+
+    if (a >= b) {
         if (a < c) {
-            console.log(c + ' ' + a + ' ' + b);
+            result += c + ' ' + a + ' ' + b;
         } else if(b < c){
-            console.log(a + ' ' + c + ' ' + b);
+            result += a + ' ' + c + ' ' + b;
         } else {
-            console.log(a + ' ' + b + ' ' + c);
+            result += a + ' ' + b + ' ' + c;
         }
     } else {
         if (b < c) {
-            console.log(c + ' ' + b + ' ' + a);
+            result += c + ' ' + b + ' ' + a;
         } else if(a < c) {
-            console.log(b + ' ' + c + ' ' + a);
+            result += b + ' ' + c + ' ' + a;
         } else {
-            console.log(b + ' ' + a + ' ' + c);
+            result += b + ' ' + a + ' ' + c;
         }
     }
+
+    console.log(result);
 }
 
-//Problem 5. Digit as word
-function digitAsWord() {
+// Problem 5. Digit as word
+function digitAsWord(args) {
     'use strict';
-    var input = window.prompt('Enter a digit [0-9]');
-    switch (+input) {
+    // var input = window.prompt('Enter a digit [0-9]');
+    var num = +args[0];
+    var digit = '';
+
+    switch (num) {
         case 0:
-            console.log('zero');
+            digit += 'zero';
             break;
         case 1:
-            console.log('one');
+            digit += 'one';
             break;
         case 2:
-            console.log('two');
+            digit += 'two';
             break;
         case 3:
-            console.log('three');
+            digit += 'three';
             break;
         case 4:
-            console.log('four');
+            digit += 'four';
             break;
         case 5:
-            console.log('five');
+            digit += 'five';
             break;
         case 6:
-            console.log('six');
+            digit += 'six';
             break;
         case 7:
-            console.log('seven');
+            digit += 'seven';
             break;
         case 8:
-            console.log('eight');
+            digit += 'eight';
             break;
         case 9:
-            console.log('nine');
+            digit += 'nine';
             break;
         default:
-            console.log('Is not a digit!');
+            digit += 'not a digit';
     }
+
+    console.log(digit);
 }
 
-//Problem 6. Quadratic equation
-function quadraticEquation(a, b, c) {
+// Problem 6. Quadratic equation
+function quadraticEquation(args) {
     'use strict';
-    var d,
+    var a = +args[0],
+        b = +args[1],
+        c = +args[2],
+        result = '',
+        d,
         x1,
         x2;
 
     d = b * b - 4 * a * c;
+
     if (d < 0) {
-        return 'no real roots';
-    }
-
-    x1 = (-b - Math.sqrt(d)) / (2 * a);
-    x2 = (-b + Math.sqrt(d)) / (2 * a);
-    if (x1 !== x2) {
-        return 'x1=' + x1 + '; ' + 'x2=' + x2;
+        result += 'no real roots';
     } else {
-        return 'x1=x2=' + x1;
+        x1 = (-b - Math.sqrt(d)) / (2 * a);
+        x2 = (-b + Math.sqrt(d)) / (2 * a);
+
+        if (x1 !== x2) {
+            result += 'x1=' + x1.toFixed(2) + '; ' + 'x2=' + x2.toFixed(2);
+        } else {
+            result += 'x1=x2=' + x1.toFixed(2);
+        }
     }
+
+    console.log(result);
 }
 
-//Problem 7. The biggest of five numbers
-function theBiggestOfFiveNumbers(a, b, c, d, e) {
+// Problem 7. The biggest of five numbers
+function theBiggestOfFiveNums(args) {
     'use strict';
-    var biggest = a;
+    var a = +args[0],
+        b = +args[1],
+        c = +args[2],
+        d = +args[3],
+        e = + args[4],
+        theBiggest;
 
-    if (b > biggest) {
-        biggest = b;
+    theBiggest = a;
+
+    if (b > theBiggest) {
+        theBiggest = b;
     }
-    if (c > biggest) {
-        biggest = c;
+    if (c > theBiggest) {
+        theBiggest = c;
     }
-    if (d > biggest) {
-        biggest = d;
+    if (d > theBiggest) {
+        theBiggest = d;
     }
-    if (e > biggest) {
-        biggest = e;
+    if (e > theBiggest) {
+        theBiggest = e;
     }
-    return biggest;
+    return theBiggest;
 }
 
-//Problem 8. Number as words
-function numberAsWords(number) {
+// Problem 8. Number as words
+function numberAsWords(args) {
     'use strict';
     var units = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'],
         tenths = ['twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'],
         hundreds = 'hundred',
+        num = +args[0],
         firstDigit,
         secondDigit,
         thirdDigit,
         result = '';
 
-    firstDigit = number % 10 | 0;
-    secondDigit = number % 100 / 10 | 0;
-    thirdDigit = number / 100 | 0;
+    firstDigit = num % 10 | 0;
+    secondDigit = num % 100 / 10 | 0;
+    thirdDigit = num / 100 | 0;
 
     if (thirdDigit) {
         result += units[thirdDigit] + ' ' + hundreds;
+
         if (secondDigit || firstDigit) {
             result += ' and ';
         } else {
@@ -194,3 +234,5 @@ function numberAsWords(number) {
 
     return result[0].toUpperCase() + result.slice(1);
 }
+
+numberAsWords(['27']);
