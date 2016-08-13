@@ -1,63 +1,67 @@
-//Problem 1. Increase array members
-function increaseArrayMembers() {
-    var i,
-        arr;
+// Problem 1. Increase array members
+function increaseArrayMembers(args) {
+    var num = +args[0],
+        arr = [];
 
-    arr = [];
-    for(i = 0; i < 20; i += 1) {
-        arr[i] = i * 5;
-    }
-
-    console.log(arr);
-}
-
-//Problem 2. Lexicographically comparison
-function lexicographicallyComparison() {
-    var i,
-        arr1,
-        arr2,
-        length;
-
-    arr1 = ['b', 'q'];
-    arr2 = ['f', 'a', 'a'];
-    length = Math.min(arr1.length, arr2.length);
-    for(i = 0; i < length; i += 1) {
-        if(arr1[i] > arr2[i]) {
-            return 'arr1 is bigger than arr2';
-        } else if(arr1[i] < arr2[i]) {
-            return 'arr2 is bigger than arr1';
+    if (1 <= num && num <= 20) {
+        for(var i = 0; i < num; i += 1) {
+            arr[i] = i * 5;
+            console.log(arr[i]);
         }
     }
-
-    return 'arrays are equal';
 }
 
-//Problem 3. Maximal sequence
-function maximalSequence(arr) {
-    var i,
-        bestCount = 1,
-        tempCount = 1,
-        bestElement = arr[0],
-        tempElement = arr[0];
+// Problem 2. Lexicographical comparison
+function lexicographicalComparison(args) {
+    var firstStr,
+        secondStr,
+        input = args[0].split('\n');
 
-    for(i = 1; i <= arr.length; i += 1) {
-        if(arr[i] === tempElement) {
-            tempCount += 1;
+    firstStr = input[0].trim();
+    secondStr = input[1].trim();
+
+    if (firstStr > secondStr) {
+        return '>';
+    } else if (firstStr < secondStr) {
+        return '<';
+    } else {
+        return '=';
+    }
+}
+
+// console.log('>');
+// lexicographicalComparison(['hello\nhalo']);
+
+// Problem 3. Maximal sequence
+function maximalSequence(args) {
+    var i,
+        element,
+        count = 1,
+        bestCount = 1,
+        arr = args[0].split('\n');
+
+    if (!+arr[0] || isNaN(arr[0] || typeof arr[0] === 'undefined' && +arr[0] == null)) {
+        console.log('0');
+    }
+
+    for(i = 1; i < arr[0]; i += 1) {
+        if(+arr[i] == element) {
+            count += 1;
         } else {
-            if(bestCount < tempCount) {
-                bestCount = tempCount;
-                bestElement = tempElement;
+            if(bestCount <= count) {
+                bestCount = count;
             }
 
-            tempCount = 1;
-            tempElement = arr[i];
+            element = +arr[i];
+            count = 1;
         }
     }
 
-    for(i = 1; i <= bestCount; i += 1) {
-        console.log(bestElement);
-    }
+    console.log(bestCount);
 }
+
+maximalSequence(['0']);
+// maximalSequence(['10\n2\n1\n1\n2\n3\n3\n2\n2\n2\n1']);
 
 //Problem 4. Maximal increasing sequence
 function maximalIncreasingSequence(arr) {
