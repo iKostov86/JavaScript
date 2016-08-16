@@ -116,7 +116,8 @@ var obj = {
         secondSecondProp: [5, 6, 7, 8],
     },
 };
-console.log(deepCopy(obj));
+
+// console.log(deepCopy(obj));
 
 //Problem 4. Has property
 function hasProperty(obj, property) {
