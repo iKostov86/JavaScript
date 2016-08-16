@@ -1,11 +1,49 @@
 //Problem 1. Planar coordinates
-function planarCoordinates(x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6) {
+function planarCoordinates(args) {
     'use strict';
-    if(arguments.length !== 12) {
-        console.log('Missing arguments!');
-        return;
+    if(args.length !== 12) {
+        throw Error('Missing arguments!');
     }
-    var p1 = points(x1, y1),
+
+    function points(x, y) {
+        return {
+            X: x,
+            Y: y,
+            distanceBetweenTwoPoints: function(p2) {
+                return Math.sqrt((this.X - p2.X) * (this.X - p2.X) + (this.Y - p2.Y) * (this.Y - p2.Y));
+            }
+        }
+    }
+
+    function lines(p1, p2) {
+        return {
+            P1: p1,
+            P2: p2,
+            length: p1.distanceBetweenTwoPoints(p2),
+            canThreeLinesFormATriangle: function(line2, line3) {
+                if((this.length + line2.length) > line3.length &&
+                    (this.length + line3.length) > line2.length &&
+                    (line2.length + line3.length) > this.length) {
+                    return 'Triangle can be built';
+                }
+                return "Triangle can not be built";
+            }
+        }
+    }
+
+    var x1 = +args[0],
+        y1 = +args[1],
+        x2 = +args[2],
+        y2 = +args[3],
+        x3 = +args[4],
+        y3 = +args[5],
+        x4 = +args[6],
+        y4 = +args[7],
+        x5 = +args[8],
+        y5 = +args[9],
+        x6 = +args[10],
+        y6 = +args[11],
+        p1 = points(x1, y1),
         p2 = points(x2, y2),
         p3 = points(x3, y3),
         p4 = points(x4, y4),
@@ -15,40 +53,17 @@ function planarCoordinates(x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6) {
         line2 = lines(p3, p4),
         line3 = lines(p5, p6);
 
-        console.log(line1.length);
-        console.log(line2.length);
-        console.log(line3.length);
-
+        console.log(line1.length.toFixed(2));
+        console.log(line2.length.toFixed(2));
+        console.log(line3.length.toFixed(2));
         console.log(line1.canThreeLinesFormATriangle(line2, line3));
 }
 
-function points(x, y) {
-    'use strict';
-    return {
-        X: x,
-        Y: y,
-        distanceBetweenTwoPoints: function(p2) {
-            return (this.X - p2.X) * (this.X - p2.X) + (this.Y - p2.Y) * (this.Y - p2.Y);
-        }
-    }
-}
-
-function lines(p1, p2) {
-    'use strict';
-    return {
-        p1:p1,
-        p2:p2,
-        length: p1.distanceBetweenTwoPoints(p2),
-        canThreeLinesFormATriangle: function(line2, line3) {
-            if((this.length + line2.length) > line3.length &&
-                (this.length + line3.length) > line2.length &&
-                (line2.length + line3.length) > this.length) {
-                return 'YES';
-            }
-            return 'NO';
-        }
-    }
-}
+planarCoordinates([
+  '5', '6', '7', '8',
+  '1', '2', '3', '4',
+  '9', '10', '11', '12'
+]);
 
 //Problem 2. Remove elements
 Array.prototype.remove = function(element) {
