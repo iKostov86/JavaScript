@@ -59,47 +59,64 @@ function planarCoordinates(args) {
         console.log(line1.canThreeLinesFormATriangle(line2, line3));
 }
 
-planarCoordinates([
-  '5', '6', '7', '8',
-  '1', '2', '3', '4',
-  '9', '10', '11', '12'
-]);
+// planarCoordinates([
+//   '5', '6', '7', '8',
+//   '1', '2', '3', '4',
+//   '9', '10', '11', '12'
+// ]);
 
 //Problem 2. Remove elements
-Array.prototype.remove = function(element) {
-    for(var i = 0; i < this.length;) {
-        if (this[i] === element) {
-            this.splice(i, 1);
-        } else {
-            i += 1;
-        }
-    }
-};
-
 function removeElement(args) {
     'use strict';
-    var arr = 
+
+    Array.prototype.remove = function(element) {
+        for(var i = 0; i < this.length;) {
+            if (this[i] === element) {
+                this.splice(i, 1);
+            } else {
+                i += 1;
+            }
+        }
+    };
+
+    var arr = args,
+        element = args[0];
+
     arr.remove(element);
-    console.log(arr);
+    console.log(arr.join('\n'));
 }
 
-removeElement([ '1', '2', '3', '2', '1', '2', '3', '2' ]);
+// removeElement([ '1', '2', '3', '2', '1', '2', '3', '2' ]);
 
 //Problem 3. Deep copy
 function deepCopy(obj) {
     'use strict';
-    if(typeof obj !== 'object') {
+    var prop,
+        copies;
+
+    if (Array.isArray(obj)) {
+        copies = [];
+    } else if (typeof obj === 'object') {
+        copies = {};
+    } else {
         return obj;
     }
-    var prop,
-        copied = {};
 
     for (prop in obj) {
-        copied[prop] = obj[prop];
+        copies[prop] = deepCopy(obj[prop]);
     }
 
-    return copied;
+    return copies;
 }
+
+var obj = {
+    firstProp: [1, 2, 3, 4],
+    secondProp: {
+        firstFirstProp: 'egati stringa',
+        secondSecondProp: [5, 6, 7, 8],
+    },
+};
+console.log(deepCopy(obj));
 
 //Problem 4. Has property
 function hasProperty(obj, property) {
