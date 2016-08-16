@@ -61,11 +61,14 @@ Array.prototype.remove = function(element) {
     }
 };
 
-function removeElements(arr, element) {
+function removeElement(args) {
     'use strict';
+    var arr = 
     arr.remove(element);
     console.log(arr);
 }
+
+removeElement([ '1', '2', '3', '2', '1', '2', '3', '2' ]);
 
 //Problem 3. Deep copy
 function deepCopy(obj) {
